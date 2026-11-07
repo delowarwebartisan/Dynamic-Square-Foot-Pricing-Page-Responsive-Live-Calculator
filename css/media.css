@@ -1,0 +1,298 @@
+/*Extra small devices portrait phones, less than 576px*/
+@media (max-width: 575.98px) {
+
+/* ====== header part css start ====== */
+
+#header_part .nab_body .navlogo_img .imglogo{
+ width: 40vw;
+}
+.nav_item_body ul {
+  margin-top: 20px;
+}
+.nav_item_body ul li {
+    width: 20%;
+    text-align: center;
+    justify-content: right;
+    margin-left: auto;
+}
+/* ====== header part css end====== */
+/* ====== hero part css end====== */
+.hero_content_part {
+    text-align: center;
+    padding-top: 50px;
+}
+/* different circle sizes */
+.hero_r1 { width: 100px; height: 100px;border-color: rgb(255, 221, 0); }
+.hero_r2 { width: 200px; height: 200px; border-color: rgba(0,150,255); }
+.hero_r3 { width: 300px; height: 300px; border-color: rgba(255,0,80); }
+@keyframes hero_right_move{
+  from{
+    top:140px;
+    left:160px;
+  }
+  to{
+    top: 50px;
+    left: 120px;
+  }
+}
+/* btn css */
+.hero_text_typing{
+ display: block;
+}
+.fire-btn {
+    padding: 9px 8px;
+}
+/* ====== hero part css end====== */
+/* ====== common header part css end====== */
+.common_header .text-section span {
+    font-size: 16px;
+}
+.common_header{
+  width: 50%;
+}
+/* ====== common header part css end====== */
+/* ====== about part css start====== */
+  .about_left .about-image .ring-container,
+  .about_left .about-image .ring-container .ring-red {
+    width: 290px;
+    height: 290px;
+  }
+  .about_left .about-image .ring-container .ring-black,
+  .about_left .about-image .ring-container .image-wrapper .founder-img {
+    width: 250px;
+    height: 250px;
+  }
+  .about_left .about-image .ring-container .image-wrapper .geometric-bg {
+    width: 220px;
+    height: 220px;
+  }
+  #about-section .about_left .about-image .founder-box h3 {
+    font-size: 16px;
+  }
+/* ====== about part css end====== */
+
+
+
+
+
+
+ 
+
+
+/* footer part start */
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+/* footer part end */
+
+ }
+
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) and (max-width: 767.98px) { 
+
+/* ====== header part css start ====== */
+
+#header_part .nab_body .navlogo_img .imglogo{
+ width: 40vw;
+}
+.nav_item_body ul {
+  margin-top: 20px;
+}
+.nav_item_body ul li {
+    width: 20%;
+    text-align: center;
+    justify-content: right;
+    margin-left: auto;
+}
+/* ====== header part css end====== */
+/* ====== hero part css end====== */
+.hero_content_part {
+    text-align: center;
+}
+/* different circle sizes */
+.hero_r1 { width: 100px; height: 100px;border-color: rgb(255, 221, 0); }
+.hero_r2 { width: 200px; height: 200px; border-color: rgba(0,150,255); }
+.hero_r3 { width: 300px; height: 300px; border-color: rgba(255,0,80); }
+@keyframes hero_right_move{
+  from{
+    top:140px;
+    left:160px;
+  }
+  to{
+    top: 50px;
+    left: 120px;
+  }
+}
+/* btn css */
+.hero_text_typing{
+ display: block;
+}
+.fire-btn {
+    padding: 9px 8px;
+}
+/* ====== hero part css end====== */
+/* ====== common header part css end====== */
+.common_header .text-section span {
+    font-size: 16px;
+}
+.common_header{
+  width: 50%;
+}
+
+/* ====== common header part css end====== */
+
+
+
+
+
+/* footer part start */
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+/* footer part end */
+}
+
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) and (max-width: 991.98px) { 
+
+/* ====== header part css start ====== */
+
+#header_part .nab_body .navlogo_img .imglogo{
+ width: 40vw;
+}
+.nav_item_body ul {
+  margin-top: 20px;
+}
+.nav_item_body ul li {
+    width: 20%;
+    text-align: center;
+    justify-content: right;
+    margin-left: auto;
+    padding: 10px 0px;
+}
+/* ====== header part css end====== */
+/* ====== hero part css start====== */
+.hero_body .hero_content_part h1{
+ font-size: 1.9rem;
+}
+.hero_content_part {
+    padding-top: 30px;
+}
+/* different circle sizes */
+.hero_r1 { width: 100px; height: 100px;border-color: rgb(255, 221, 0); }
+.hero_r2 { width: 200px; height: 200px; border-color: rgba(0,150,255); }
+.hero_r3 { width: 300px; height: 300px; border-color: rgba(255,0,80); }
+@keyframes hero_right_move{
+  from{
+    top:140px;
+    left:160px;
+  }
+  to{
+    top: 50px;
+    left: 120px;
+  }
+}
+/* btn css */
+.hero_text_typing{
+ display: block;
+}
+.fire-btn {
+    padding: 9px 8px;
+}
+/* ====== hero part css end====== */
+/* ====== common header part css end====== */
+#service_section .common_header .text-section span {
+    font-size: 16px;
+}
+
+/*
+/* ====== common header part css end====== */
+/* ====== about part css start====== */
+  .about_left .about-image .ring-container,
+  .about_left .about-image .ring-container .ring-red {
+    width: 290px;
+    height: 290px;
+  }
+  .about_left .about-image .ring-container .ring-black,
+  .about_left .about-image .ring-container .image-wrapper .founder-img {
+    width: 250px;
+    height: 250px;
+  }
+  .about_left .about-image .ring-container .image-wrapper .geometric-bg {
+    width: 220px;
+    height: 220px;
+  }
+  #about-section .about_left .about-image .founder-box h3 {
+    font-size: 16px;
+  }
+/* ====== about part css end====== */
+
+
+
+
+
+ }
+
+
+ 
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+/* ====== hero part css start====== */
+.hero_body .hero_content_part h1{
+ font-size: 1.9rem;
+}
+.hero_content_part {
+    padding: 30px 0px;
+}
+/* different circle sizes */
+.hero_r1 { width: 100px; height: 100px;border-color: rgb(255, 221, 0); }
+.hero_r2 { width: 200px; height: 200px; border-color: rgba(0,150,255); }
+.hero_r3 { width: 300px; height: 300px; border-color: rgba(255,0,80); }
+@keyframes hero_right_move{
+  from{
+    top:140px;
+    left:160px;
+  }
+  to{
+    top: 50px;
+    left: 120px;
+  }
+}
+.hero {
+  height: 90vh;
+  
+}
+.hero_text_typing{
+ display: block;
+}
+/* ====== hero part css end====== */
+/* ====== common header part css end====== */
+#service_section .common_header .text-section span {
+    font-size: 1rem;
+}
+/* ====== common header part css end====== */
+
+
+
+
+
+
+}
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) and (max-width: 1399.98px) { 
+
+
+
+
+
+
+ }
+ @media (min-width: 1400px) { 
+
+
+
+
+
+ }

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Vinyl Sticker Pricing Manager</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --brand: #2563eb; --brand-dark: #1d4ed8;
+    --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1; --slate-400: #94a3b8; --slate-500: #64748b;
+    --slate-600: #475569; --slate-700: #334155; --slate-800: #1e293b; --slate-900: #0f172a;
+    --emerald-50: #ecfdf5; --emerald-600: #059669; --emerald-700: #047857;
+    --amber-100: #fef3c7; --amber-800: #92400e;
+    --red-50: #fef2f2; --red-600: #dc2626; --red-700: #b91c1c;
+    --radius: 12px;
+  }
+  body {
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    background: var(--slate-50); color: var(--slate-800);
+    min-height: 100vh; padding: 24px 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* Header */
+  .admin-header {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #fff; padding: 20px 24px; border-radius: 16px;
+    border: 1px solid var(--slate-200); box-shadow: 0 4px 6px -1px rgba(15,23,42,.05);
+    margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+  }
+  .admin-header h1 { font-size: 22px; font-weight: 800; color: var(--slate-900); }
+  .admin-header p { font-size: 12px; color: var(--slate-500); margin-top: 2px; }
+  
+  .btn-save {
+    background: var(--emerald-600); color: #fff; font-weight: 700; font-size: 14px;
+    padding: 10px 20px; border-radius: 10px; border: none; cursor: pointer;
+    display: flex; align-items: center; gap: 8px; transition: background .2s;
+    box-shadow: 0 4px 12px rgba(5,150,105,.25);
+  }
+  .btn-save:hover { background: var(--emerald-700); }
+
+  /* Grid Layout */
+  .admin-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; }
+  @media(min-width: 768px) {
+    .admin-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .panel-card {
+    background: #fff; border-radius: 16px; border: 1px solid var(--slate-200);
+    padding: 24px; box-shadow: 0 4px 6px -1px rgba(15,23,42,.03);
+  }
+  .panel-card h2 {
+    font-size: 15px; font-weight: 800; color: var(--slate-900);
+    margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--slate-100);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* Form Elements */
+  .form-group { margin-bottom: 14px; }
+  .form-group label {
+    display: block; font-size: 11px; font-weight: 700; color: var(--slate-600);
+    text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;
+  }
+  .form-input {
+    width: 100%; padding: 10px 14px; border: 1px solid var(--slate-200); border-radius: 8px;
+    font-size: 13px; font-weight: 600; color: var(--slate-800); background: #fff;
+    transition: all .2s; font-family: inherit;
+  }
+  .form-input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+
+  /* Table for Inputs inside Panels */
+  .price-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .price-table th {
+    text-align: left; font-size: 10px; text-transform: uppercase; font-weight: 800;
+    color: var(--slate-400); background: var(--slate-50); padding: 8px 10px; border-bottom: 1px solid var(--slate-200);
+  }
+  .price-table td { padding: 8px 10px; border-bottom: 1px solid var(--slate-100); vertical-align: middle; }
+  .price-table td input { width: 100px; padding: 6px 10px; font-size: 12px; }
+  .option-name { font-size: 12px; font-weight: 700; color: var(--slate-700); }
+  .option-code { font-size: 10px; color: var(--slate-400); display: block; }
+
+  /* ============ LOWER SAVED DATA TABLE ============ */
+  .table-card {
+    background: #fff; border-radius: 16px; border: 1px solid var(--slate-200);
+    box-shadow: 0 4px 6px -1px rgba(15,23,42,.05); overflow: hidden;
+  }
+  .table-header {
+    padding: 20px 24px; border-bottom: 1px solid var(--slate-200);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 14px;
+  }
+  .table-title h2 { font-size: 18px; font-weight: 800; color: var(--slate-900); }
+  .table-title p { font-size: 12px; color: var(--slate-500); margin-top: 2px; }
+
+  .table-wrapper { width: 100%; overflow-x: auto; }
+  .saved-table { width: 100%; border-collapse: collapse; text-align: left; }
+  
+  .saved-table th {
+    background: var(--slate-50); font-size: 11px; text-transform: uppercase;
+    font-weight: 800; color: var(--slate-500); padding: 12px 18px;
+    border-bottom: 1px solid var(--slate-200); letter-spacing: 0.5px;
+  }
+  .saved-table td { padding: 14px 18px; border-bottom: 1px solid var(--slate-100); font-size: 13px; font-weight: 600; color: var(--slate-700); }
+  .saved-table tr:hover td { background: var(--slate-50); }
+
+  /* Category Badges */
+  .badge {
+    display: inline-block; padding: 4px 10px; border-radius: 999px;
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+  }
+  .badge-general { background: #e0f2fe; color: #0369a1; }
+  .badge-base { background: #eff6ff; color: var(--brand-dark); }
+  .badge-mat { background: var(--emerald-50); color: var(--emerald-700); }
+  .badge-coat { background: #f3e8ff; color: #7e22ce; }
+  .badge-finish { background: var(--amber-100); color: var(--amber-800); }
+
+  .price-text { font-weight: 800; color: var(--slate-900); }
+  .price-extra { color: var(--emerald-600); }
+  .price-minus { color: var(--red-600); }
+
+  /* Action Buttons */
+  .actions-cell { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+  .btn-action {
+    border: none; background: none; cursor: pointer; padding: 6px 10px;
+    border-radius: 6px; font-size: 12px; font-weight: 700; transition: all .2s;
+  }
+  .btn-edit { background: var(--slate-100); color: var(--slate-700); }
+  .btn-edit:hover { background: var(--brand); color: #fff; }
+  .btn-delete { background: var(--red-50); color: var(--red-600); }
+  .btn-delete:hover { background: var(--red-600); color: #fff; }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(15,23,42,.5); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center; z-index: 100;
+    opacity: 0; pointer-events: none; transition: all .2s;
+  }
+  .modal-overlay.show { opacity: 1; pointer-events: auto; }
+  .modal {
+    background: #fff; width: 100%; max-width: 440px; border-radius: 16px;
+    padding: 24px; box-shadow: 0 20px 25px -5px rgba(0,0,0,.1);
+  }
+  .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .modal-head h3 { font-size: 16px; font-weight: 800; color: var(--slate-900); }
+  .modal-close { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--slate-400); }
+  .modal-foot { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    z-index: 50; padding: 12px 20px; border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(15,23,42,.3); font-size: 13px; font-weight: 700; color: #fff;
+    background: var(--emerald-600); display: flex; align-items: center; gap: 10px;
+    opacity: 0; pointer-events: none; transition: all .3s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Admin Header -->
+  <div class="admin-header">
+    <div>
+      <h1>⚙️ Vinyl Sticker & Pricing Backend Manager</h1>
+      <p>Manage product name, square inch base rates, materials, and finish options dynamically.</p>
+    </div>
+    <button class="btn-save" onclick="saveSettings()">💾 Save & Sync Table</button>
+  </div>
+
+  <div class="admin-grid">
+
+    <!-- Panel 1: General Product Info -->
+    <div class="panel-card">
+      <h2>📦 General Product Info</h2>
+      
+      <div class="form-group">
+        <label for="prodTitle">Product Name</label>
+        <input type="text" id="prodTitle" class="form-input" value="Vinyl Stickers">
+      </div>
+
+      <div class="form-group">
+        <label for="baseRate">Base Square Inch Rate ($ per sq. in.)</label>
+        <input type="number" id="baseRate" class="form-input" step="0.01" value="0.15">
+        <p style="font-size: 10px; color: var(--slate-400); margin-top: 4px;">Piece Price = (Width × Height) × Base Rate + Add-ons</p>
+      </div>
+
+      <div class="form-group">
+        <label for="couponCode">Active Coupon Code</label>
+        <input type="text" id="couponCode" class="form-input" value="STICKER60">
+      </div>
+
+      <div class="form-group">
+        <label for="couponDiscount">Coupon Discount Percentage (%)</label>
+        <input type="number" id="couponDiscount" class="form-input" value="60">
+      </div>
+    </div>
+
+    <!-- Panel 2: Material Pricing Manager -->
+    <div class="panel-card">
+      <h2>🧱 Material Options Price (+ / -)</h2>
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>Sticker Material</th>
+            <th>Extra Cost ($)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="option-name">White Vinyl (Standard)</span><span class="option-code">code: white</span></td>
+            <td><input type="number" step="0.01" id="mat_white" class="form-input" value="0.00"></td>
+          </tr>
+          <tr>
+            <td><span class="option-name">Clear / Transparent</span><span class="option-code">code: clear</span></td>
+            <td><input type="number" step="0.01" id="mat_clear" class="form-input" value="2.00"></td>
+          </tr>
+          <tr>
+            <td><span class="option-name">Holographic Sparkle</span><span class="option-code">code: holographic</span></td>
+            <td><input type="number" step="0.01" id="mat_holographic" class="form-input" value="4.00"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Panel 3: Finish & Cut Style -->
+    <div class="panel-card">
+      <h2>✨ Finish & Cut Options Price</h2>
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>Option Name</th>
+            <th>Extra Cost ($)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="option-name">Glossy UV Finish</span></td>
+            <td><input type="number" step="0.01" id="fin_glossy" class="form-input" value="0.00"></td>
+          </tr>
+          <tr>
+            <td><span class="option-name">Matte Smooth Finish</span></td>
+            <td><input type="number" step="0.01" id="fin_matte" class="form-input" value="1.00"></td>
+          </tr>
+          <tr>
+            <td><span class="option-name">Die-Cut (Cut to shape)</span></td>
+            <td><input type="number" step="0.01" id="cut_diecut" class="form-input" value="0.00"></td>
+          </tr>
+          <tr>
+            <td><span class="option-name">Kiss-Cut (Sheet peel)</span></td>
+            <td><input type="number" step="0.01" id="cut_kisscut" class="form-input" value="1.50"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Panel 4: Turnaround Speed -->
+    <div class="panel-card">
+      <h2>⚡ Delivery Turnaround Price</h2>
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>Delivery Speed</th>
+            <th>Extra Cost ($)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="option-name">3 Business Days</span></td>
+            <td><input type="number" step="0.01" id="turn_3" class="form-input" value="0.00"></td>
+          </tr>
+          <tr>
+            <td><span class="option-name">Express 24 Hours</span></td>
+            <td><input type="number" step="0.01" id="turn_1" class="form-input" value="8.00"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- SAVED DATA DISPLAY TABLE -->
+  <div class="table-card">
+    <div class="table-header">
+      <div class="table-title">
+        <h2>📋 Saved Sticker Configuration Table</h2>
+        <p>Live synchronized list of saved options with Edit and Delete options.</p>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="saved-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Option / Setting Name</th>
+            <th>Code / Key</th>
+            <th>Configured Value / Price</th>
+            <th style="text-align: right;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="savedTableBody">
+          <!-- Rows will render dynamically via JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Edit Configuration</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="form-group">
+      <label>Setting / Option Name</label>
+      <input type="text" id="modalName" class="form-input">
+    </div>
+    <div class="form-group">
+      <label>Value / Price ($)</label>
+      <input type="text" id="modalValue" class="form-input">
+    </div>
+    <div class="modal-foot">
+      <button class="btn-action btn-edit" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" style="padding: 8px 16px; font-size:13px;" onclick="saveModalChanges()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="adminToast">✅ Sticker settings saved and synchronized with table!</div>
+
+<script>
+  // Initial Sticker Items Data Structure
+  var dynamicItems = [
+    { cat: 'General', badge: 'badge-general', name: 'Product Name', code: 'prodTitle', val: 'Vinyl Stickers', isPrice: false, inputId: 'prodTitle' },
+    { cat: 'Base Rate', badge: 'badge-base', name: 'Square Inch Base Rate', code: 'baseRate', val: 0.15, isPrice: true, unit: '/ sq.in', inputId: 'baseRate' },
+    { cat: 'General', badge: 'badge-general', name: 'Coupon Code & Discount', code: 'coupon', val: 'STICKER60 (60% OFF)', isPrice: false, inputId: 'couponCode' },
+    { cat: 'Material', badge: 'badge-mat', name: 'White Vinyl (Standard)', code: 'mat_white', val: 0.00, isPrice: true, inputId: 'mat_white' },
+    { cat: 'Material', badge: 'badge-mat', name: 'Clear / Transparent', code: 'mat_clear', val: 2.00, isPrice: true, inputId: 'mat_clear' },
+    { cat: 'Material', badge: 'badge-mat', name: 'Holographic Sparkle', code: 'mat_holographic', val: 4.00, isPrice: true, inputId: 'mat_holographic' },
+    { cat: 'Finish', badge: 'badge-coat', name: 'Glossy UV Finish', code: 'fin_glossy', val: 0.00, isPrice: true, inputId: 'fin_glossy' },
+    { cat: 'Finish', badge: 'badge-coat', name: 'Matte Smooth Finish', code: 'fin_matte', val: 1.00, isPrice: true, inputId: 'fin_matte' },
+    { cat: 'Cut Style', badge: 'badge-finish', name: 'Die-Cut (Cut to shape)', code: 'cut_diecut', val: 0.00, isPrice: true, inputId: 'cut_diecut' },
+    { cat: 'Cut Style', badge: 'badge-finish', name: 'Kiss-Cut (Sheet peel)', code: 'cut_kisscut', val: 1.50, isPrice: true, inputId: 'cut_kisscut' },
+    { cat: 'Turnaround', badge: 'badge-general', name: '3 Business Days', code: 'turn_3', val: 0.00, isPrice: true, inputId: 'turn_3' },
+    { cat: 'Turnaround', badge: 'badge-general', name: 'Express 24 Hours', code: 'turn_1', val: 8.00, isPrice: true, inputId: 'turn_1' }
+  ];
+
+  var currentEditingIndex = null;
+
+  // Render Saved Data Table
+  function renderTable() {
+    var tbody = document.getElementById('savedTableBody');
+    tbody.innerHTML = '';
+
+    dynamicItems.forEach(function(item, index) {
+      var tr = document.createElement('tr');
+      
+      var valDisplay = '';
+      if (item.isPrice) {
+        var pNum = parseFloat(item.val) || 0;
+        var pClass = pNum > 0 ? 'price-extra' : (pNum < 0 ? 'price-minus' : '');
+        var prefix = pNum > 0 ? '+' : '';
+        valDisplay = '<span class="price-text ' + pClass + '">' + prefix + '$' + Math.abs(pNum).toFixed(2) + (item.unit || '') + '</span>';
+      } else {
+        valDisplay = '<strong>' + item.val + '</strong>';
+      }
+
+      tr.innerHTML = 
+        '<td><span class="badge ' + item.badge + '">' + item.cat + '</span></td>' +
+        '<td>' + item.name + '</td>' +
+        '<td><code>' + item.code + '</code></td>' +
+        '<td>' + valDisplay + '</td>' +
+        '<td style="text-align: right;">' +
+          '<div class="actions-cell">' +
+            '<button class="btn-action btn-edit" onclick="openEditModal(' + index + ')">✏️ Edit</button>' +
+            '<button class="btn-action btn-delete" onclick="deleteItem(' + index + ')">🗑️ Delete</button>' +
+          '</div>' +
+        '</td>';
+
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Save changes from Form to Data & Table
+  function saveSettings() {
+    dynamicItems.forEach(function(item) {
+      if (item.inputId) {
+        var inputElem = document.getElementById(item.inputId);
+        if (inputElem) {
+          if (item.inputId === 'couponCode') {
+            var disc = document.getElementById('couponDiscount').value;
+            item.val = inputElem.value + ' (' + disc + '% OFF)';
+          } else {
+            item.val = item.isPrice ? parseFloat(inputElem.value) : inputElem.value;
+          }
+        }
+      }
+    });
+
+    renderTable();
+
+    // Show Toast
+    var toast = document.getElementById('adminToast');
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 2500);
+  }
+
+  // Modal Functions
+  function openEditModal(index) {
+    currentEditingIndex = index;
+    var item = dynamicItems[index];
+    document.getElementById('modalTitle').innerText = 'Edit ' + item.name;
+    document.getElementById('modalName').value = item.name;
+    document.getElementById('modalValue').value = item.val;
+    document.getElementById('editModal').classList.add('show');
+  }
+
+  function closeModal() {
+    document.getElementById('editModal').classList.remove('show');
+  }
+
+  function saveModalChanges() {
+    if (currentEditingIndex !== null) {
+      var item = dynamicItems[currentEditingIndex];
+      item.name = document.getElementById('modalName').value;
+      var newVal = document.getElementById('modalValue').value;
+      
+      item.val = item.isPrice ? parseFloat(newVal) : newVal;
+
+      // Also update the panel input field if linked
+      if (item.inputId && document.getElementById(item.inputId)) {
+        document.getElementById(item.inputId).value = item.isPrice ? parseFloat(newVal) : newVal;
+      }
+
+      renderTable();
+      closeModal();
+    }
+  }
+
+  // Delete Item
+  function deleteItem(index) {
+    if (confirm('Are you sure you want to delete this option from the sticker configuration table?')) {
+      dynamicItems.splice(index, 1);
+      renderTable();
+    }
+  }
+
+  // Initial Load
+  renderTable();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vinyl Banners - Premium Product Card</title>
+<style>
+  /* ============ RESET & BASE ============ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --brand: #2563eb; --brand-dark: #1d4ed8; --brand-darker: #1e40af;
+    --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1; --slate-400: #94a3b8; --slate-500: #64748b;
+    --slate-600: #475569; --slate-700: #334155; --slate-800: #1e293b; --slate-900: #0f172a;
+    --emerald-50: #ecfdf5; --emerald-100: #d1fae5; --emerald-500: #10b981; --emerald-600: #059669; --emerald-700: #047857;
+    --amber-100: #fef3c7; --amber-400: #fbbf24; --amber-800: #92400e;
+    --red-600: #dc2626;
+    --radius: 12px;
+  }
+  body {
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    background: var(--slate-50); color: var(--slate-800);
+    min-height: 100vh; padding: 24px 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { text-decoration: none; color: var(--brand); }
+  button { cursor: pointer; font-family: inherit; }
+
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* ============ BREADCRUMB ============ */
+  .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--slate-500); margin-bottom: 18px; flex-wrap: wrap; }
+  .breadcrumb a { color: var(--slate-500); font-weight: 600; transition: color .2s; }
+  .breadcrumb a:hover { color: var(--brand); }
+  .breadcrumb .sep { font-size: 10px; color: var(--slate-400); }
+  .breadcrumb .current { color: var(--slate-900); font-weight: 700; }
+
+  /* ============ MAIN CARD ============ */
+  .card {
+    background: #fff; border-radius: 24px; overflow: hidden;
+    border: 1px solid var(--slate-100);
+    box-shadow: 0 20px 40px -18px rgba(15,23,42,.18);
+  }
+  .card-grid { display: grid; grid-template-columns: 1fr; }
+
+  /* ============ LEFT COLUMN ============ */
+  .col-left {
+    padding: 28px; background: rgba(248,250,252,.5);
+    border-bottom: 1px solid var(--slate-100);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .coupon-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--emerald-50); color: var(--emerald-700);
+    border: 1px solid rgba(16,185,129,.25); border-radius: 999px;
+    padding: 4px 12px; font-size: 11px; font-weight: 700;
+  }
+  .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald-500); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.5; transform:scale(.8)} }
+
+  .product-title { font-size: 26px; font-weight: 800; color: var(--slate-900); margin: 10px 0 6px; letter-spacing: -0.5px; }
+  .rating-row { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+  .stars { color: var(--amber-400); font-size: 14px; letter-spacing: 2px; }
+  .rating-num { font-weight: 700; color: var(--slate-700); }
+  .rating-dot { color: var(--slate-400); }
+  .reviews-link { font-size: 12px; font-weight: 600; }
+
+  /* Image frame */
+  .img-frame {
+    position: relative; border-radius: 16px; padding: 40px;
+    background: linear-gradient(to bottom, var(--slate-100), rgba(226,232,240,.8));
+    display: flex; align-items: center; justify-content: center;
+    min-height: 300px; overflow: hidden; box-shadow: inset 0 2px 10px rgba(15,23,42,.08);
+    margin-top: 16px;
+  }
+  .img-frame .zoom-hint {
+    position: absolute; top: 12px; left: 12px;
+    background: rgba(255,255,255,.9); backdrop-filter: blur(6px);
+    padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700;
+    color: var(--slate-700); border: 1px solid rgba(226,232,240,.8); display: flex; gap: 6px; align-items: center;
+  }
+  .banner-mockup { width: 100%; max-width: 480px; transition: transform .4s; filter: drop-shadow(0 20px 25px rgba(15,23,42,.25)); }
+  .img-frame:hover .banner-mockup { transform: scale(1.05); }
+  .banner-frame { position: relative; background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid var(--slate-300); box-shadow: 0 20px 30px rgba(15,23,42,.3); }
+  .banner-frame img { width: 100%; height: 260px; object-fit: cover; display: block; }
+  .banner-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.8), rgba(0,0,0,.2) 55%, transparent);
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; color: #fff;
+  }
+  .sale-tag {
+    background: var(--red-600); color: #fff; font-weight: 900; font-size: 10px;
+    text-transform: uppercase; letter-spacing: 2px; padding: 4px 10px;
+    border-radius: 4px; width: max-content; margin-bottom: 8px;
+  }
+  .banner-overlay h2 { font-size: 24px; font-weight: 900; text-transform: uppercase; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,.4); }
+  .banner-overlay p { font-size: 11px; color: var(--slate-200); margin-top: 6px; font-weight: 500; }
+  .grommet { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: var(--slate-300); border: 2px solid var(--slate-600); box-shadow: inset 0 1px 3px rgba(0,0,0,.4); }
+  .g-tl{top:8px;left:8px}.g-tr{top:8px;right:8px}.g-bl{bottom:8px;left:8px}.g-br{bottom:8px;right:8px}
+
+  /* Thumbnails */
+  .thumb-label { font-size: 11px; font-weight: 700; color: var(--slate-500); text-transform: uppercase; letter-spacing: 1px; margin: 18px 0 8px; }
+  .thumbs { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; }
+  .thumbs::-webkit-scrollbar { height: 6px; }
+  .thumbs::-webkit-scrollbar-track { background: var(--slate-100); border-radius: 999px; }
+  .thumbs::-webkit-scrollbar-thumb { background: var(--slate-300); border-radius: 999px; }
+  .thumb-btn {
+    width: 72px; height: 72px; flex-shrink: 0; border-radius: 12px; overflow: hidden;
+    border: 2px solid transparent; background: #fff; padding: 0; transition: all .2s; box-shadow: 0 1px 3px rgba(15,23,42,.1);
+  }
+  .thumb-btn img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb-btn:hover { border-color: var(--slate-300); }
+  .thumb-btn.active { border-color: var(--brand); }
+
+  /* Specs box */
+  .specs-box { margin-top: 28px; border: 1px solid rgba(226,232,240,.8); border-radius: 16px; background: #fff; padding: 18px; }
+  .specs-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--slate-100); padding-bottom: 12px; margin-bottom: 14px; }
+  .specs-head h3 { font-size: 13px; font-weight: 800; color: var(--slate-900); }
+  .pro-badge { font-size: 10px; font-weight: 700; color: var(--slate-500); background: var(--slate-100); padding: 3px 10px; border-radius: 999px; }
+  .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .spec-item { padding: 10px; border-radius: 12px; background: var(--slate-50); border: 1px solid var(--slate-100); display: flex; gap: 10px; align-items: flex-start; }
+  .spec-ico { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+  .ico-blue{background:#eff6ff}.ico-green{background:var(--emerald-100)}.ico-purple{background:#f3e8ff}.ico-amber{background:var(--amber-100)}
+  .spec-item .lbl { display: block; font-size: 9px; text-transform: uppercase; font-weight: 800; color: var(--slate-400); }
+  .spec-item .val { font-size: 11px; font-weight: 700; color: var(--slate-800); }
+
+  /* Tabs */
+  .spec-tabs { border-bottom: 1px solid var(--slate-200); display: flex; gap: 18px; }
+  .spec-tab-btn { background: none; border: none; font-size: 12px; font-weight: 700; padding: 0 0 10px; color: var(--slate-500); border-bottom: 2px solid transparent; transition: all .2s; }
+  .spec-tab-btn:hover { color: var(--slate-800); }
+  .spec-tab-btn.active { color: var(--brand); border-bottom-color: var(--brand); }
+  .tab-content { padding-top: 14px; font-size: 12px; color: var(--slate-600); line-height: 1.6; }
+  .tab-content p { margin-bottom: 8px; }
+  .tab-content ul { list-style: disc; padding-left: 18px; color: var(--slate-700); }
+  .tab-content li { margin-bottom: 4px; }
+  .hidden { display: none !important; }
+
+  /* Highlights */
+  .highlights { margin-top: 28px; padding-top: 22px; border-top: 1px solid rgba(226,232,240,.7); }
+  .highlight { display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 500; color: var(--slate-700); margin-bottom: 10px; }
+  .check-ico { width: 24px; height: 24px; border-radius: 50%; background: var(--emerald-100); color: var(--emerald-600); display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+  .highlight b { color: var(--slate-900); margin-left: 4px; }
+
+  /* ============ RIGHT COLUMN ============ */
+  .col-right { padding: 28px; background: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+  .right-head { display: flex; justify-content: space-between; align-items: flex-start; }
+  .right-head h1 { font-size: 28px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.5px; }
+  .head-price { text-align: right; }
+  .head-price .msrp { font-size: 11px; color: var(--slate-400); text-decoration: line-through; display: block; }
+  .head-price .price { font-size: 24px; font-weight: 900; color: var(--slate-900); }
+  .right-sub { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; flex-wrap: wrap; gap: 8px; }
+
+  /* Option rows */
+  .options { margin-top: 22px; display: flex; flex-direction: column; gap: 10px; }
+  .option-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    padding: 10px 12px; border-radius: 12px; border: 1px solid var(--slate-100); transition: background .2s;
+  }
+  .option-row:hover { background: var(--slate-50); }
+  .option-row label { font-size: 13px; font-weight: 700; color: var(--slate-700); width: 33%; display: flex; gap: 8px; align-items: center; }
+  .select-wrap { position: relative; width: 67%; }
+  select {
+    width: 100%; background: #fff; border: 1px solid var(--slate-200); color: var(--slate-800);
+    font-size: 12px; font-weight: 600; font-family: inherit;
+    border-radius: 8px; padding: 10px 32px 10px 12px; box-shadow: 0 1px 2px rgba(15,23,42,.06);
+    appearance: none; -webkit-appearance: none; cursor: pointer; transition: all .2s;
+  }
+  select:hover { border-color: var(--slate-300); }
+  select:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(37,99,235,.2); }
+  .select-arrow { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--slate-400); font-size: 11px; pointer-events: none; }
+
+  /* Custom Size Inputs */
+  .custom-size-wrap { width: 67%; display: flex; align-items: center; gap: 8px; }
+  .custom-size-field { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .custom-size-field label { width: 100%; font-size: 9px; text-transform: uppercase; font-weight: 800; color: var(--slate-400); }
+  .size-input {
+    width: 100%; background: #fff; border: 1px solid var(--slate-200); color: var(--slate-800);
+    font-size: 12px; font-weight: 700; font-family: inherit; border-radius: 8px; padding: 8px 10px;
+    box-shadow: 0 1px 2px rgba(15,23,42,.06); transition: all .2s;
+  }
+  .size-input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(37,99,235,.2); }
+  .size-x { font-weight: 800; color: var(--slate-400); font-size: 12px; margin-top: 12px; }
+
+  /* Upload Box */
+  .upload-box {
+    width: 67%; border: 2px dashed var(--slate-300); border-radius: 10px; padding: 10px;
+    text-align: center; background: var(--slate-50); cursor: pointer; transition: all .2s; position: relative;
+  }
+  .upload-box:hover { border-color: var(--brand); background: #eff6ff; }
+  .upload-box input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+  .upload-icon { font-size: 18px; margin-bottom: 2px; }
+  .upload-text { font-size: 11px; font-weight: 700; color: var(--slate-700); }
+  .upload-hint { font-size: 9px; color: var(--slate-400); margin-top: 2px; }
+  .file-name { font-size: 11px; font-weight: 800; color: var(--brand); word-break: break-all; margin-top: 4px; display: none; }
+
+  /* Price box */
+  .price-box { margin-top: 22px; background: rgba(248,250,252,.8); border: 1px solid rgba(226,232,240,.8); border-radius: 16px; padding: 18px; }
+  .price-box-top { display: grid; grid-template-columns: 1fr; gap: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(226,232,240,.8); }
+  .qty-label, .turn-label { display: block; font-size: 10px; font-weight: 800; color: var(--slate-600); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .qty-picker { display: flex; align-items: center; }
+  .qty-btn { width: 40px; height: 40px; background: #fff; border: 1px solid var(--slate-200); color: var(--slate-600); font-weight: 800; font-size: 13px; transition: background .2s; }
+  .qty-btn:hover { background: var(--slate-100); }
+  .qty-btn:first-child { border-radius: 8px 0 0 8px; border-right: none; }
+  .qty-btn:last-child { border-radius: 0 8px 8px 0; border-left: none; }
+  .qty-input {
+    width: 52px; height: 40px; border-top: 1px solid var(--slate-200); border-bottom: 1px solid var(--slate-200);
+    border-left: none; border-right: none; text-align: center; font-weight: 800; font-size: 14px; color: var(--slate-800); background: #fff;
+  }
+  .qty-input:focus { outline: none; }
+  .price-box-bottom { padding-top: 14px; display: flex; flex-direction: column; gap: 10px; justify-content: space-between; }
+  .cost-label { font-size: 11px; font-weight: 700; color: var(--slate-500); }
+  .price-line { display: flex; align-items: baseline; gap: 8px; }
+  .strike { font-size: 12px; color: var(--slate-400); text-decoration: line-through; }
+  .big-price { font-size: 28px; font-weight: 900; color: var(--slate-900); }
+  .unit-price { font-size: 10px; color: var(--slate-500); margin-top: 2px; }
+  .coupon-note { font-size: 10px; font-weight: 600; color: var(--slate-600); background: #fff; border: 1px solid var(--slate-200); padding: 6px 10px; border-radius: 6px; width: max-content; }
+  .coupon-note strong { color: var(--brand); }
+  .off-tag { background: var(--amber-100); color: var(--amber-800); font-weight: 800; padding: 1px 5px; border-radius: 3px; font-size: 9px; }
+
+  /* CTA buttons */
+  .cta-section { margin-top: 22px; display: flex; flex-direction: column; gap: 10px; }
+  .btn { width: 100%; font-weight: 800; font-size: 15px; padding: 14px 20px; border-radius: 12px; border: none; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all .2s; }
+  .btn-order {
+    background: var(--brand); color: #fff;
+    box-shadow: 0 10px 20px -6px rgba(37,99,235,.4);
+  }
+  .btn-order:hover { background: var(--brand-dark); transform: translateY(-2px); box-shadow: 0 12px 24px -6px rgba(37,99,235,.5); }
+  .btn-order:active { background: var(--brand-darker); }
+  .btn-cart { background: #fff; color: var(--slate-800); border: 1px solid var(--slate-300); box-shadow: 0 1px 2px rgba(15,23,42,.06); }
+  .btn-cart:hover { background: var(--slate-50); border-color: var(--slate-400); }
+  .btn-cart:active { background: var(--slate-100); }
+  .cart-badge { background: var(--brand); color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 999px; }
+  .shipping-note { text-align: center; margin-top: 14px; font-size: 11px; font-weight: 700; color: var(--slate-500); display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    z-index: 50; padding: 12px 20px; border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(15,23,42,.3); font-size: 13px; font-weight: 700; color: #fff;
+    display: flex; align-items: center; gap: 10px; opacity: 0; pointer-events: none; transition: all .3s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast-success { background: var(--emerald-600); }
+  .toast-info { background: var(--brand-dark); }
+
+  /* Mobile-only / desktop-only blocks */
+  .mobile-only { display: block; }
+  .desktop-only { display: none; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (min-width: 640px) {
+    body { padding: 32px 24px; }
+    .price-box-top { grid-template-columns: 1fr 1fr; }
+    .price-box-bottom { flex-direction: row; align-items: center; }
+    .product-title { font-size: 30px; }
+  }
+  @media (min-width: 1024px) {
+    body { padding: 48px 32px; }
+    .card-grid { grid-template-columns: repeat(12, 1fr); }
+    .col-left { grid-column: span 6; border-bottom: none; border-right: 1px solid var(--slate-100); padding: 40px; }
+    .col-right { grid-column: span 6; padding: 40px; }
+    .mobile-only { display: none; }
+    .desktop-only { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="#">Home</a><span class="sep">›</span>
+    <a href="#">Banner Printing</a><span class="sep">›</span>
+    <span class="current">Vinyl Banners</span>
+  </nav>
+
+  <!-- Main Product Card -->
+  <div class="card">
+    <div class="card-grid">
+
+      <!-- LEFT COLUMN -->
+      <div class="col-left">
+        <div>
+          <!-- Mobile header -->
+          <div class="mobile-only">
+            <span class="coupon-pill"><span class="pulse-dot"></span> Coupon LOVEMYBN60 applied (60% OFF)</span>
+            <h1 class="product-title">Vinyl Banners</h1>
+            <div class="rating-row">
+              <span class="stars">★★★★★</span>
+              <span class="rating-num">5.0</span><span class="rating-dot">•</span>
+              <a class="reviews-link" href="#reviews">237 Reviews</a>
+            </div>
+          </div>
+
+          <!-- Main image -->
+          <div class="img-frame">
+            <div class="zoom-hint">🔍 Hover to inspect</div>
+            <div class="banner-mockup">
+              <div class="banner-frame">
+                <img id="mainProductImage" src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1000&q=80" alt="Vinyl Banner Preview">
+                <div class="banner-overlay">
+                  <span class="sale-tag">25% OFF 2nd Month</span>
+                  <h2>Unleash Your Power!</h2>
+                  <p>Free Trial Classes • Heavy-Duty 13oz Vinyl</p>
+                </div>
+                <span class="grommet g-tl"></span><span class="grommet g-tr"></span>
+                <span class="grommet g-bl"></span><span class="grommet g-br"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thumbnails -->
+          <p class="thumb-label">Select Angle / Style</p>
+          <div class="thumbs">
+            <button class="thumb-btn active" onclick="changeImage('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1000&q=80', this)">
+              <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=200&q=80" alt="Angle 1">
+            </button>
+            <button class="thumb-btn" onclick="changeImage('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=80', this)">
+              <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=200&q=80" alt="Angle 2">
+            </button>
+            <button class="thumb-btn" onclick="changeImage('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1000&q=80', this)">
+              <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" alt="Angle 3">
+            </button>
+            <button class="thumb-btn" onclick="changeImage('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1000&q=80', this)">
+              <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=200&q=80" alt="Angle 4">
+            </button>
+          </div>
+
+          <!-- Specifications -->
+          <div class="specs-box">
+            <div class="specs-head">
+              <h3>🎚️ Product Specifications</h3>
+              <span class="pro-badge">Pro Grade</span>
+            </div>
+            <div class="specs-grid">
+              <div class="spec-item"><div class="spec-ico ico-blue">⚖️</div><div><span class="lbl">Weight</span><span class="val">13 oz. Matte Vinyl</span></div></div>
+              <div class="spec-item"><div class="spec-ico ico-green">☀️</div><div><span class="lbl">UV &amp; Weather</span><span class="val">Waterproof / Fade Proof</span></div></div>
+              <div class="spec-item"><div class="spec-ico ico-purple">🖨️</div><div><span class="lbl">Print Resolution</span><span class="val">1000 DPI High-Def</span></div></div>
+              <div class="spec-item"><div class="spec-ico ico-amber">🛡️</div><div><span class="lbl">Fire Rating</span><span class="val">NFPA 701 Certified</span></div></div>
+            </div>
+
+            <div class="spec-tabs">
+              <button class="spec-tab-btn active" onclick="switchSpecTab('materials', this)">Material Info</button>
+              <button class="spec-tab-btn" onclick="switchSpecTab('finishing', this)">Finishing &amp; Hanging</button>
+              <button class="spec-tab-btn" onclick="switchSpecTab('care', this)">Care &amp; Maintenance</button>
+            </div>
+
+            <div class="tab-content" id="tab-materials">
+              <p>Our vinyl banners are printed using eco-solvent UV resistant inks on tear-resistant 13 oz premium polyester mesh reinforced vinyl fabric.</p>
+              <ul>
+                <li>Smooth matte surface eliminates glares under direct sun light.</li>
+                <li>Suitable for extreme temperature ranges (-20°F to 140°F).</li>
+                <li>100% recyclable material with low VOC emissions.</li>
+              </ul>
+            </div>
+            <div class="tab-content hidden" id="tab-finishing">
+              <p>Customize your installation setup with heavy-duty finishing options:</p>
+              <ul>
+                <li><strong>Grommets:</strong> Nickel-plated brass eyelets placed every 2 feet.</li>
+                <li><strong>Welded Hems:</strong> Thermal heat-welded 1-inch border prevents fraying.</li>
+                <li><strong>Pole Pockets:</strong> Optional 3-inch top/bottom pockets for stand insertion.</li>
+              </ul>
+            </div>
+            <div class="tab-content hidden" id="tab-care">
+              <p>Maintain print vibrancy for 3 to 5 years with proper care:</p>
+              <ul>
+                <li>Clean gently using lukewarm water and mild dish detergent.</li>
+                <li>Roll banner with printed side facing outward for wrinkle-free storage.</li>
+                <li>Do not fold or expose to harsh solvent cleaners.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Highlights -->
+        <div class="highlights">
+          <div class="highlight"><span class="check-ico">✓</span> Ready for delivery in <b>48 hours</b></div>
+          <div class="highlight"><span class="check-ico">✓</span> Durable weather-proof materials last up to <b>5 years</b></div>
+          <div class="highlight"><span class="check-ico">✓</span> High-grade vinyl, perfect for indoor &amp; outdoor use</div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="col-right">
+        <div>
+          <!-- Desktop header -->
+          <div class="desktop-only">
+            <div class="right-head">
+              <h1>Vinyl Banners</h1>
+              <div class="head-price">
+                <span class="msrp">MSRP $62.28</span>
+                <span class="price">$<span id="headerPrice">24.91</span></span>
+              </div>
+            </div>
+            <div class="right-sub">
+              <div class="rating-row">
+                <span class="stars">★★★★★</span>
+                <span class="rating-num">5.0</span><span class="rating-dot">•</span>
+                <a class="reviews-link" href="#reviews">237 Reviews</a>
+              </div>
+              <span class="coupon-pill">🏷️ LOVEMYBN60 (60% OFF)</span>
+            </div>
+          </div>
+
+          <!-- Options -->
+          <div class="options">
+
+            <!-- CUSTOM SIZE (WIDTH & HEIGHT) -->
+            <div class="option-row">
+              <label for="width">📐 Custom Size</label>
+              <div class="custom-size-wrap">
+                <div class="custom-size-field">
+                  <label for="width">Width (ft)</label>
+                  <input type="number" id="width" class="size-input" value="4" min="1" max="50" step="0.5">
+                </div>
+                <span class="size-x">✕</span>
+                <div class="custom-size-field">
+                  <label for="height">Height (ft)</label>
+                  <input type="number" id="height" class="size-input" value="2" min="1" max="50" step="0.5">
+                </div>
+              </div>
+            </div>
+
+            <!-- DESIGN FILE UPLOADER -->
+            <div class="option-row">
+              <label>📁 Demo Design</label>
+              <div class="upload-box">
+                <input type="file" id="designFile" accept="image/*,.pdf,.psd,.ai" onchange="handleFileUpload(this)">
+                <div class="upload-icon">☁️</div>
+                <div class="upload-text">Upload Design File</div>
+                <div class="upload-hint">JPG, PNG, PDF, AI or PSD</div>
+                <div class="file-name" id="fileNameDisplay"></div>
+              </div>
+            </div>
+
+            <div class="option-row">
+              <label for="material">🧱 Material</label>
+              <div class="select-wrap">
+                <select id="material">
+                  <option value="13oz">13 oz. White Vinyl (Standard)</option>
+                  <option value="18oz">18 oz. Heavy Duty Vinyl (+$5.00)</option>
+                  <option value="mesh">10 oz. Mesh Vinyl (Outdoor Windproof)</option>
+                </select>
+                <span class="select-arrow">▼</span>
+              </div>
+            </div>
+
+            <div class="option-row">
+              <label for="coating">✨ Coating</label>
+              <div class="select-wrap">
+                <select id="coating">
+                  <option value="none">No Coating</option>
+                  <option value="uv">UV Matte Protection (+$3.50)</option>
+                  <option value="gloss">High Gloss Premium Finish (+$4.00)</option>
+                </select>
+                <span class="select-arrow">▼</span>
+              </div>
+            </div>
+
+            <div class="option-row">
+              <label for="printedSide">📄 Printed Side</label>
+              <div class="select-wrap">
+                <select id="printedSide">
+                  <option value="front">Front Only</option>
+                  <option value="both">Front and Back (Double Sided) (+$15.00)</option>
+                </select>
+                <span class="select-arrow">▼</span>
+              </div>
+            </div>
+
+            <div class="option-row">
+              <label for="grommets">⭕ Grommets</label>
+              <div class="select-wrap">
+                <select id="grommets">
+                  <option value="corners">Every 2 Feet &amp; Corners (Recommended) (+$0.00)</option>
+                  <option value="none">None (−$2.00)</option>
+                  <option value="top-only">Top Corners Only (−$1.00)</option>
+                </select>
+                <span class="select-arrow">▼</span>
+              </div>
+            </div>
+
+            <div class="option-row">
+              <label for="hemming">▦ Hemming</label>
+              <div class="select-wrap">
+                <select id="hemming">
+                  <option value="welded">Welded Hem (Extra Durability) (+$0.00)</option>
+                  <option value="none">None (Cut to Size) (−$3.00)</option>
+                </select>
+                <span class="select-arrow">▼</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Price box -->
+          <div class="price-box">
+            <div class="price-box-top">
+              <div>
+                <label class="qty-label" for="quantity">Quantity</label>
+                <div class="qty-picker">
+                  <button class="qty-btn" onclick="updateQty(-1)">−</button>
+                  <input class="qty-input" type="number" id="quantity" value="1" min="1" max="500" readonly>
+                  <button class="qty-btn" onclick="updateQty(1)">+</button>
+                </div>
+              </div>
+              <div>
+                <label class="turn-label" for="turnaround">Turnaround</label>
+                <div class="select-wrap" style="width:100%">
+                  <select id="turnaround">
+                    <option value="3">3 Business Days</option>
+                    <option value="2">2 Business Days (+$5.00)</option>
+                    <option value="1">Next Day Express (+$12.00)</option>
+                  </select>
+                  <span class="select-arrow">▼</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="price-box-bottom">
+              <div>
+                <span class="cost-label">Printing Cost:</span>
+                <div class="price-line">
+                  <span class="strike">$<span id="strikePrice">62.28</span></span>
+                  <span class="big-price">$<span id="totalPrice">24.91</span></span>
+                </div>
+                <p class="unit-price">( $<span id="unitPrice">24.91</span> / piece )</p>
+              </div>
+              <span class="coupon-note">Coupon <strong>LOVEMYBN60</strong> applied <span class="off-tag">60% OFF</span></span>
+            </div>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="cta-section">
+            <button class="btn btn-order" onclick="handleAction('order')">⚡ Order Now</button>
+            <button class="btn btn-cart" onclick="handleAction('cart')">🛒 Add to Cart <span id="cartBadge" class="cart-badge hidden">0</span></button>
+          </div>
+
+          <div class="shipping-note">🚚 Free shipping on orders over $50</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="appToast"></div>
+
+<script>
+  // ============ PRICE CONFIGURATION (demo prices) ============
+  var pricePerSqFt = 3.11375; // Based on default 2x4 = 8 sq.ft costing $24.91
+
+  var basePrices = {
+    material:    { '13oz': 0, '18oz': 5.00, 'mesh': 3.00 },
+    coating:     { 'none': 0, 'uv': 3.50, 'gloss': 4.00 },
+    printedSide: { 'front': 0, 'both': 15.00 },
+    grommets:    { 'corners': 0, 'none': -2.00, 'top-only': -1.00 },
+    hemming:     { 'welded': 0, 'none': -3.00 },
+    turnaround:  { '3': 0, '2': 5.00, '1': 12.00 }
+  };
+
+  var currentQty = 1;
+  var cartCount = 0;
+
+  function updateQty(change) {
+    var input = document.getElementById('quantity');
+    var val = parseInt(input.value, 10) + change;
+    if (val < 1) val = 1;
+    if (val > 500) val = 500;
+    input.value = val;
+    currentQty = val;
+    calculatePrice();
+  }
+
+  function calculatePrice() {
+    var width  = parseFloat(document.getElementById('width').value) || 0;
+    var height = parseFloat(document.getElementById('height').value) || 0;
+    var sqFt   = width * height;
+
+    var matVal   = document.getElementById('material').value;
+    var coatVal  = document.getElementById('coating').value;
+    var sideVal  = document.getElementById('printedSide').value;
+    var gromVal  = document.getElementById('grommets').value;
+    var hemVal   = document.getElementById('hemming').value;
+    var turnVal  = document.getElementById('turnaround').value;
+
+    var baseSizePrice = sqFt * pricePerSqFt;
+
+    var singleUnitPrice = baseSizePrice
+                        + basePrices.material[matVal]
+                        + basePrices.coating[coatVal]
+                        + basePrices.printedSide[sideVal]
+                        + basePrices.grommets[gromVal]
+                        + basePrices.hemming[hemVal]
+                        + basePrices.turnaround[turnVal];
+
+    if (singleUnitPrice < 0) singleUnitPrice = 0;
+
+    var total = singleUnitPrice * currentQty;
+    var originalTotal = total * 2.5; // simulated non-discounted price
+
+    document.getElementById('unitPrice').innerText    = singleUnitPrice.toFixed(2);
+    document.getElementById('totalPrice').innerText   = total.toFixed(2);
+    document.getElementById('headerPrice').innerText  = total.toFixed(2);
+    document.getElementById('strikePrice').innerText  = originalTotal.toFixed(2);
+  }
+
+  // Listen to inputs
+  document.getElementById('width').addEventListener('input', calculatePrice);
+  document.getElementById('height').addEventListener('input', calculatePrice);
+
+  var selectIds = ['material', 'coating', 'printedSide', 'grommets', 'hemming', 'turnaround'];
+  for (var i = 0; i < selectIds.length; i++) {
+    document.getElementById(selectIds[i]).addEventListener('change', calculatePrice);
+  }
+
+  // ============ FILE UPLOAD DISPLAY ============
+  function handleFileUpload(input) {
+    var display = document.getElementById('fileNameDisplay');
+    if (input.files && input.files[0]) {
+      display.innerText = '📎 ' + input.files[0].name;
+      display.style.display = 'block';
+    } else {
+      display.style.display = 'none';
+    }
+  }
+
+  // ============ IMAGE SWITCHER ============
+  function changeImage(src, btn) {
+    document.getElementById('mainProductImage').src = src;
+    var btns = document.querySelectorAll('.thumb-btn');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.remove('active');
+    }
+    btn.classList.add('active');
+  }
+
+  // ============ SPEC TAB SWITCHER ============
+  function switchSpecTab(tabId, btn) {
+    var contents = document.querySelectorAll('.tab-content');
+    for (var i = 0; i < contents.length; i++) {
+      contents[i].classList.add('hidden');
+    }
+    var tabs = document.querySelectorAll('.spec-tab-btn');
+    for (var j = 0; j < tabs.length; j++) {
+      tabs[j].classList.remove('active');
+    }
+    document.getElementById('tab-' + tabId).classList.remove('hidden');
+    btn.classList.add('active');
+  }
+
+  // ============ TOAST ============
+  var toastTimer = null;
+  function showToast(message, type) {
+    var toast = document.getElementById('appToast');
+    toast.className = 'toast ' + (type === 'success' ? 'toast-success' : 'toast-info');
+    toast.innerText = (type === 'success' ? '✅ ' : '🛒 ') + message;
+    void toast.offsetWidth;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toast.classList.remove('show');
+    }, 2500);
+  }
+
+  // ============ ORDER NOW / ADD TO CART ============
+  function handleAction(action) {
+    var qty = document.getElementById('quantity').value;
+    var total = document.getElementById('totalPrice').innerText;
+    var w = document.getElementById('width').value;
+    var h = document.getElementById('height').value;
+    
+    if (action === 'order') {
+      showToast('Order placed! ' + qty + ' x Vinyl Banner (' + w + 'x' + h + ' ft) — $' + total, 'success');
+    } else if (action === 'cart') {
+      cartCount += parseInt(qty, 10);
+      var badge = document.getElementById('cartBadge');
+      badge.innerText = cartCount;
+      badge.classList.remove('hidden');
+      showToast('Added ' + qty + ' x Vinyl Banner to cart', 'info');
+    }
+  }
+
+  // Initial calculation
+  calculatePrice();
+</script>
+
+</body>
+</html>
